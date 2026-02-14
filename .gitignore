@@ -1,0 +1,7 @@
+build/
+playground/
+
+# just in case
+*.o
+*.out
+*.exe

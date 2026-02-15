@@ -1,6 +1,8 @@
 build/
 playground/
 
+.direnv
+
 # just in case
 *.o
 *.out

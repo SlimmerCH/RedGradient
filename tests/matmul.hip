@@ -4,6 +4,7 @@
 #include "ml/math.hpp"
 #include "common/math.hpp"
 #include <hip/hip_runtime.h>
+#include "ml/kernels/utils.hpp"
 
 TEST_CASE("Matrix Multiplication Correctness") {
     int M = 64, N = 64, K = 64;
@@ -24,20 +25,20 @@ TEST_CASE("Matrix Multiplication Correctness") {
     int size_B = K*N*sizeof(float);
     int size_C = M*N*sizeof(float);
 
-    hipMalloc(&d_A, size_A);
-    hipMalloc(&d_B, size_B);
-    hipMalloc(&d_C, size_C);
+    HIP_CHECK(hipMalloc(&d_A, size_A));
+    HIP_CHECK(hipMalloc(&d_B, size_B));
+    HIP_CHECK(hipMalloc(&d_C, size_C));
 
-    hipMemcpy(d_A, h_A.data(), size_A, hipMemcpyHostToDevice);
-    hipMemcpy(d_B, h_B.data(), size_B, hipMemcpyHostToDevice);
+    HIP_CHECK(hipMemcpy(d_A, h_A.data(), size_A, hipMemcpyHostToDevice));
+    HIP_CHECK(hipMemcpy(d_B, h_B.data(), size_B, hipMemcpyHostToDevice));
     
     SUBCASE("Naive Mode") {
-        hipMemcpy(d_C, h_C.data(), size_C, hipMemcpyHostToDevice);
+        HIP_CHECK(hipMemcpy(d_C, h_C.data(), size_C, hipMemcpyHostToDevice));
 
         gpu_matmul(d_A, d_B, d_C, alpha, beta, M, N, K, MatMulMode::Naive);
         cpu_matmul(h_A, h_B, h_C, alpha, beta, M, N, K);
 
-        hipMemcpy(result_gpu.data(), d_C, size_C, hipMemcpyDeviceToHost);
+        HIP_CHECK(hipMemcpy(result_gpu.data(), d_C, size_C, hipMemcpyDeviceToHost));
 
         for (int i=0; i<M*N; i++) {
             CHECK(
@@ -46,7 +47,7 @@ TEST_CASE("Matrix Multiplication Correctness") {
         }
     }
 
-    hipFree(d_A);
-    hipFree(d_B);
-    hipFree(d_C);
+    HIP_CHECK(hipFree(d_A));
+    HIP_CHECK(hipFree(d_B));
+    HIP_CHECK(hipFree(d_C));
 }

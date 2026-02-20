@@ -1,5 +1,5 @@
 #include <hip/hip_runtime.h>
-#include "kernels/naive.hpp"
+#include "ml/kernels/utils.hpp"
 
 template <typename T>
 __global__ void naiveKernel(const T* A, const T* B, T* C, T alpha, T beta, int M, int N, int K) {
@@ -30,5 +30,8 @@ void matmul_naive(const T* A, const T* B, T* C, T alpha, T beta, int M, int N, i
     HIP_CHECK(hipGetLastError());
 }
 
-template void matmul_naive<float>(const float* A, const float* B, float* C, float alpha, float beta, int M, int N, int K);
-template void matmul_naive<double>(const double* A, const double* B, double* C, double alpha, double beta, int M, int N, int K);
+#define INSTANTIATE_MATMUL_NAIVE(T) \
+template void matmul_naive<T>(const T* A, const T* B, T* C, T alpha, T beta, int M, int N, int K)
+
+INSTANTIATE_MATMUL_NAIVE(float);
+INSTANTIATE_MATMUL_NAIVE(double);

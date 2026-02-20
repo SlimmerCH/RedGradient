@@ -1,5 +1,5 @@
-#include "ml/kernels/naive.hpp"
-#include "ml/math.hpp"
+#include "blas/kernels/naive.hpp"
+#include "blas/math.hpp"
 #include <iostream>
 
 template <typename T>

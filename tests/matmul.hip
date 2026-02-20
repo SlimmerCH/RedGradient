@@ -1,10 +1,10 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include <doctest/doctest.h>
 
-#include "ml/math.hpp"
+#include "blas/math.hpp"
 #include "common/math.hpp"
 #include <hip/hip_runtime.h>
-#include "ml/kernels/utils.hpp"
+#include "blas/kernels/utils.hpp"
 
 TEST_CASE("Matrix Multiplication Correctness") {
     int M = 64, N = 64, K = 64;

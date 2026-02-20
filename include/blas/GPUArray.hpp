@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ml/memory.hpp"
+#include "blas/memory.hpp"
 #include <cstddef>
 #include <utility>
 

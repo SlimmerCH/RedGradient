@@ -1,5 +1,5 @@
 #include <hip/hip_runtime.h>
-#include "ml/kernels/utils.hpp"
+#include "blas/kernels/utils.hpp"
 
 template <typename T>
 __global__ void naiveKernel(const T* A, const T* B, T* C, T alpha, T beta, int M, int N, int K) {

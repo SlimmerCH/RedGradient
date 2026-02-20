@@ -1,5 +1,5 @@
-#include "ml/memory.hpp"
-#include "ml/kernels/utils.hpp"
+#include "blas/memory.hpp"
+#include "blas/kernels/utils.hpp"
 #include <hip/hip_runtime.h>
 #include <stdexcept>
 
